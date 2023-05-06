@@ -1,6 +1,6 @@
-// import Chart from 'chart.js/auto'
-// import zoomPlugin from 'chartjs-plugin-zoom';
-// Chart.register(zoomPlugin);
+import Chart from 'chart.js/auto'
+import zoomPlugin from 'chartjs-plugin-zoom';
+Chart.register(zoomPlugin);
 
 import data_contrast_2023 from '../2023_contrast_prs_bugfixes.json';
 import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';

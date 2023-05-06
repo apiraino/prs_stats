@@ -1,6 +1,6 @@
-// import Chart from 'chart.js/auto'
-// import zoomPlugin from 'chartjs-plugin-zoom';
-// Chart.register(zoomPlugin);
+import Chart from 'chart.js/auto'
+import zoomPlugin from 'chartjs-plugin-zoom';
+Chart.register(zoomPlugin);
 
 import data_prs_days_open_2023 from '../2023.json';
 import data_prs_days_open_2022 from '../2022.json';
