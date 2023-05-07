@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 
-rm -rf docs prs_stats
 npm run build
 
 # only for local testing

@@ -17,7 +17,7 @@ from gql.transport.exceptions import TransportQueryError
 API_URL = "https://api.github.com"
 API_TOKEN = os.getenv("API_TOKEN")
 # between pages to reduce chances of being throttled
-WAIT_SECS = 0.5
+WAIT_SECS = 1.0
 PER_PAGE = 50
 # when I get throttled, try this many timwes then adbicate and save the data so far
 MAX_TRIES_WHEN_THROTTLED = 5
