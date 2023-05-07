@@ -48,7 +48,6 @@ import { plugins, scales, elements } from './common';
         chart.update();
       },
     },
-    plugins: []
   };
 
   const contrast_2023 = new Chart(
@@ -91,7 +90,6 @@ import { plugins, scales, elements } from './common';
         chart.update();
       },
     },
-    plugins: []
   };
 
   const contrast_2022 = new Chart(
@@ -135,7 +133,6 @@ import { plugins, scales, elements } from './common';
         chart.update();
       },
     },
-    plugins: []
   };
 
   const contrast_2021 = new Chart(

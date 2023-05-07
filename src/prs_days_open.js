@@ -39,7 +39,7 @@ import { plugins, scales, elements } from './common';
 
   // clone plugin config and customize title
   const plugins_2023 = structuredClone(plugins);
-  plugins_2023.title.text='[2023] Contrast PRs and bugfixes'
+  plugins_2023.title.text='[2023] How long are PRs sitting open before being closed?'
   const config_2023 = {
     type: 'line',
     data: data_2023,
@@ -86,7 +86,7 @@ import { plugins, scales, elements } from './common';
 
   // clone plugin config and customize title
   const plugins_2022 = structuredClone(plugins);
-  plugins_2022.title.text='[2022] Contrast PRs and bugfixes'
+  plugins_2022.title.text='[2022] How long are PRs sitting open before being closed?'
   const config_2022 = {
     type: 'line',
     data: data_2022,
@@ -133,7 +133,7 @@ import { plugins, scales, elements } from './common';
 
   // clone plugin config and customize title
   const plugins_2021 = structuredClone(plugins);
-  plugins_2021.title.text='[2021] Contrast PRs and bugfixes'
+  plugins_2021.title.text='[2021] How long are PRs sitting open before being closed?'
   const config_2021 = {
     type: 'line',
     data: data_2021,
@@ -180,7 +180,7 @@ import { plugins, scales, elements } from './common';
 
   // clone plugin config and customize title
   const plugins_2020 = structuredClone(plugins);
-  plugins_2020.title.text='[2020] Contrast PRs and bugfixes'
+  plugins_2020.title.text='[2020] How long are PRs sitting open before being closed?'
   const config_2020 = {
     type: 'line',
     data: data_2020,
