@@ -100,8 +100,8 @@ import data_prs_days_open_2020 from '../2020.json';
             backgroundColor: 'orange'
           },
           {
-            label: 'More than 30 days',
-            data: data_prs_days_open_2023.map(row => row.over_30),
+            label: 'More than 60 days',
+            data: data_prs_days_open_2023.map(row => row.over_60),
             backgroundColor: 'red'
           }
         ]
@@ -129,8 +129,8 @@ import data_prs_days_open_2020 from '../2020.json';
             backgroundColor: 'orange'
           },
           {
-            label: 'More than 30 days',
-            data: data_prs_days_open_2022.map(row => row.over_30),
+            label: 'More than 60 days',
+            data: data_prs_days_open_2022.map(row => row.over_60),
             backgroundColor: 'red'
           }
         ]
@@ -158,8 +158,8 @@ import data_prs_days_open_2020 from '../2020.json';
             backgroundColor: 'orange'
           },
           {
-            label: 'More than 30 days',
-            data: data_prs_days_open_2021.map(row => row.over_30),
+            label: 'More than 60 days',
+            data: data_prs_days_open_2021.map(row => row.over_60),
             backgroundColor: 'red'
           }
         ]
@@ -187,8 +187,8 @@ import data_prs_days_open_2020 from '../2020.json';
             backgroundColor: 'orange'
           },
           {
-            label: 'More than 30 days',
-            data: data_prs_days_open_2020.map(row => row.over_30),
+            label: 'More than 60 days',
+            data: data_prs_days_open_2020.map(row => row.over_60),
             backgroundColor: 'red'
           }
         ]

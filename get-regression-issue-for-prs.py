@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 from utils import *
 
 SRC_FILE = "prs.json"
@@ -18,7 +17,6 @@ def eprintln(msg):
 if len(sys.argv) < 2:
     bail_out("./filter-prs-by-date.py <from: YYYY-MM-DD> <to: YYYY-MM-DD> > data.dat")
 
-
 if not os.path.exists(SRC_FILE):
     bail_out("Source file {} missing. Run get-all-prs.py first".format(SRC_FILE))
 else:
@@ -33,7 +31,6 @@ eprintln("Filtering data: from {} to {}".format(from_date, to_date))
 # ex. 2016-11-03T04:49:05Z
 date_format = "%Y-%m-%dT%H:%M:%SZ"
 output = {}
-prev_week = None
 
 for pr in data:
     obj = {}
@@ -43,9 +40,7 @@ for pr in data:
         continue
     # eprintln("Closing date: {}".format(_close))
     curr_week = _close.strftime("%W")
-    if not prev_week:
-        prev_week = curr_week
-    eprintln("Week is {}".format(curr_week))
+    eprintln("\nCurrent week is {}".format(curr_week))
 
     # retrieve an issue connected to this PR
     issue = get_regression_issue(pr["number"])
@@ -54,27 +49,27 @@ for pr in data:
         # exit and save everything we got until now
         break
 
-    # dump week data and reset counters for the new week
-    if curr_week != prev_week:
-        idx = [x for x in output if x == curr_week]
-        # create new week obj
-        if not idx:
-            obj = {
-                "num_prs": 1,
-                "num_bugfixes": issue,
-            }
-            # output.update({curr_week: obj})
-        else:
-            # add numbers to existing week in the list
-            idx = idx[0]
-            obj = {
-                "num_prs": output[idx]["num_prs"] + 1,
-                "num_bugfixes": output[idx]["num_bugfixes"] + issue,
-            }
-        output.update({curr_week: obj})
-        eprintln("[W{}] {}".format(curr_week, obj))
+    # dump week data
+    # check if we already have this week in the global counter
+    # if NOT: create a new object and add it to the counter
+    # if YES: retrieve the week object from the counter and increment it
 
-    prev_week = curr_week
+    # look if we already have this week in the global counter
+    idx = [x for x in output if x == curr_week]
+    if not idx:
+        # initialize a new week obj
+        obj = {"num_prs": 1, "num_bugfixes": issue}
+    else:
+        # increment counter for an existing week in the global counter
+        idx = idx[0]
+        obj = {
+            "num_prs": output[idx]["num_prs"] + 1,
+            "num_bugfixes": output[idx]["num_bugfixes"] + issue,
+        }
+
+    # add data point to the global counter
+    output.update({curr_week: obj})
+    eprintln("[W{}] {}".format(curr_week, obj))
 
 json_data = []
 for w in output:
