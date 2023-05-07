@@ -111,5 +111,5 @@ def _get_regression_issue(pr_num):
     if nodes:
         eprintln("PR #{} has issue #{} linked".format(pr_num, nodes[0]["number"]))
         return 1
-    eprintln("PR #{} has NO issue linked", pr_num)
+    eprintln("PR #{} has NO issue linked".format(pr_num))
     return 0

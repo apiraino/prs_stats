@@ -34,12 +34,10 @@ eprintln("Filtering data: from {} to {}".format(from_date, to_date))
 date_format = "%Y-%m-%dT%H:%M:%SZ"
 output = {}
 prev_week = None
-num_prs = 0
-num_bugfixes = 0
 
-i = 0
-obj = {}
 for pr in data:
+    obj = {}
+    issue = 0
     _close = datetime.strptime(pr["closed_at"], date_format)
     if _close < from_date or _close > to_date:
         continue
@@ -47,32 +45,7 @@ for pr in data:
     curr_week = _close.strftime("%W")
     if not prev_week:
         prev_week = curr_week
-    # eprintln("Week is {}".format(curr_week))
-
-    # dump week data and reset counters for the new week
-    if curr_week != prev_week:
-        # create new week obj
-        idx = [x for x in output if x == curr_week]
-        if not idx:
-            obj = {
-                "num_prs": num_prs,
-                "num_bugfixes": num_bugfixes,
-            }
-            output.update({curr_week: obj})
-        else:
-            # add numbers to existing week in the list
-            idx = idx[0]
-            obj = {
-                "num_prs": output[idx]["num_prs"] + num_prs,
-                "num_bugfixes": output[idx]["num_bugfixes"] + num_bugfixes,
-            }
-            output.update({curr_week: obj})
-
-        num_prs = 0
-        num_bugfixes = 0
-        i = i + 1
-
-        # eprintln("[W{}] {} {} {}".format(curr_week, num_prs, num_bugfixes))
+    eprintln("Week is {}".format(curr_week))
 
     # retrieve an issue connected to this PR
     issue = get_regression_issue(pr["number"])
@@ -80,16 +53,27 @@ for pr in data:
         # we're probably throttled
         # exit and save everything we got until now
         break
-    if issue == 1:
-        num_bugfixes = num_bugfixes + 1
-    num_prs = num_prs + 1
 
-    # _close_yymmdd = _close.strftime(date_fmt)
-    # if not (
-    #     datetime.strptime(_close_yymmdd, date_fmt) > from_date
-    #     and datetime.strptime(_close_yymmdd, date_fmt) < to_date
-    # ):
-    #     continue
+    # dump week data and reset counters for the new week
+    if curr_week != prev_week:
+        idx = [x for x in output if x == curr_week]
+        # create new week obj
+        if not idx:
+            obj = {
+                "num_prs": 1,
+                "num_bugfixes": issue,
+            }
+            # output.update({curr_week: obj})
+        else:
+            # add numbers to existing week in the list
+            idx = idx[0]
+            obj = {
+                "num_prs": output[idx]["num_prs"] + 1,
+                "num_bugfixes": output[idx]["num_bugfixes"] + issue,
+            }
+        output.update({curr_week: obj})
+        eprintln("[W{}] {}".format(curr_week, obj))
+
     prev_week = curr_week
 
 json_data = []

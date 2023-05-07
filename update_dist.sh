@@ -7,4 +7,4 @@ npm run build
 # simulate where the github pages expect to find the files
 cp -r docs prs_stats
 
-# to update the website, just git push the /docs directory
+# to update the github pages just git push the /docs directory

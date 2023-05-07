@@ -65,15 +65,6 @@ import data_prs_days_open_2020 from '../2020.json';
     }
   }
 
-  // const actions = [
-  //   {
-  //     name: 'Reset zoom',
-  //     handler: function(chart) {
-  //       chart.resetZoom();
-  //     }
-  //   }
-  // ];
-
   // clone config and change title for each graph
   var opts_2023 = structuredClone(opts);
   var opts_2022 = structuredClone(opts);
@@ -88,12 +79,6 @@ import data_prs_days_open_2020 from '../2020.json';
   const ctx_prs_days_open_2022 = document.getElementById('prs_days_open_2022');
   const ctx_prs_days_open_2021 = document.getElementById('prs_days_open_2021');
   const ctx_prs_days_open_2020 = document.getElementById('prs_days_open_2020');
-
-  // TODO
-  // const years = [2020,2021,2022,2023]
-  // years.forEach(year => {
-  //   console.debug('Create all charts here...')
-  // })
 
   // PRs closed in 2023
   const chart_2023 = new Chart(
@@ -183,7 +168,7 @@ import data_prs_days_open_2020 from '../2020.json';
   );
 
   // PRs closed in 2020
-  var chart_2020 = new Chart(
+  const chart_2020 = new Chart(
     ctx_prs_days_open_2020,
     {
       type: 'line',
@@ -210,5 +195,21 @@ import data_prs_days_open_2020 from '../2020.json';
       },
     }
   );
+
+  resetZoomBtn2023 = () => {
+    chart_2023.resetZoom()
+  };
+
+  resetZoomBtn2022 = () => {
+    chart_2022.resetZoom()
+  };
+
+  resetZoomBtn2021 = () => {
+    chart_2021.resetZoom()
+  };
+
+  resetZoomBtn2020 = () => {
+    chart_2020.resetZoom()
+  };
 
 })();

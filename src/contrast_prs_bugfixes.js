@@ -4,7 +4,7 @@ Chart.register(zoomPlugin);
 
 import data_contrast_2023 from '../2023_contrast_prs_bugfixes.json';
 import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
-// import data_contrast_2021 from '../2021_contrast_prs_bugfixes.json';
+import data_contrast_2021 from '../2021_contrast_prs_bugfixes.json';
 
 (async function() {
 
@@ -68,16 +68,6 @@ import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
   opts_2022.plugins.title.text='[2022] Contrast PRs and bugfixes'
   opts_2021.plugins.title.text='[2021] Contrast PRs and bugfixes'
 
-  // const actions = [
-  //   {
-  //     name: 'Reset zoom',
-  //     handler: function(chart) {
-  //       console.debug('no?');
-  //       chart.resetZoom();
-  //     }
-  //   }
-  // ];
-
   const ctx_contrast_2023 = document.getElementById('2023_contrast_prs_bugfixes');
   const ctx_contrast_2022 = document.getElementById('2022_contrast_prs_bugfixes');
   const ctx_contrast_2021 = document.getElementById('2021_contrast_prs_bugfixes');
@@ -105,8 +95,6 @@ import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
       },
     }
   );
-  // XXX: maybe not needed
-  // contrast_2023.actions = actions
 
   // PRs closed in 2022
   const contrast_2022 = new Chart(
@@ -133,28 +121,39 @@ import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
   );
 
   // PRs closed in 2021
-  // opts.plugins.title.text='[2021] Contrast PRs and bugfixes'
-  // var contrast_2021 = new Chart(
-  //   ctx_contrast_2021,
-  //   {
-  //     type: 'line',
-  //     options: opts,
-  //     data: {
-  //       labels: data_contrast_2021.map(row => row.woy),
-  //       datasets: [
-  //         {
-  //           label: 'Bugfixes',
-  //           data: data_contrast_2021.map(row => row.num_bugfixes),
-  //           backgroundColor: 'orange'
-  //         },
-  //         {
-  //           label: 'PRs',
-  //           data: data_contrast_2021.map(row => row.num_prs),
-  //           backgroundColor: '#66b237'
-  //         },
-  //       ]
-  //     },
-  //   }
-  // );
+  var contrast_2021 = new Chart(
+    ctx_contrast_2021,
+    {
+      type: 'line',
+      options: opts_2021,
+      data: {
+        labels: data_contrast_2021.map(row => row.woy),
+        datasets: [
+          {
+            label: 'Bugfixes',
+            data: data_contrast_2021.map(row => row.num_bugfixes),
+            backgroundColor: 'orange'
+          },
+          {
+            label: 'PRs',
+            data: data_contrast_2021.map(row => row.num_prs),
+            backgroundColor: '#66b237'
+          },
+        ]
+      },
+    }
+  );
+
+  resetZoomBtn2023 = () => {
+    contrast_2023.resetZoom()
+  };
+
+  resetZoomBtn2022 = () => {
+    contrast_2022.resetZoom()
+  };
+
+  resetZoomBtn2021 = () => {
+    contrast_2021.resetZoom()
+  };
 
 })();
