@@ -6,66 +6,9 @@ import data_prs_days_open_2023 from '../2023.json';
 import data_prs_days_open_2022 from '../2022.json';
 import data_prs_days_open_2021 from '../2021.json';
 import data_prs_days_open_2020 from '../2020.json';
+import { plugins, scales, elements } from './common';
 
 (async function() {
-
-    const zoomOptions = {
-    pan: {
-      enabled:true,
-      mode: 'xy'
-    },
-    limits: {
-      x: {min: 0, max: 'original'},
-      y: {min: 0, max: 'original'},
-    },
-    // zoom is enabled by event onClick
-    zoom: {
-      wheel: {
-        enabled: false
-      },
-      pinch: {
-        enabled: false
-      },
-      mode: 'xy'
-    },
-  };
-  const zoomStatus = () => 'Zoom: ' + (zoomOptions.zoom.wheel.enabled ? 'enabled' : 'disabled');
-
-  const scales = {
-    x: {
-      title: {display:true, text:'Week of the year', font:{size:24}}
-    },
-    y: {
-      title: {display:true, text:'Num PRs', font:{size:24}}
-    },
-  };
-
-  const plugins = {
-    zoom: zoomOptions,
-    legend: {
-      labels: {
-        font: {
-          size:24
-        }
-      },
-    },
-    title: {
-      display:true,
-      font: {
-        size:24
-      },
-      text: 'Change me ...',
-    }
-  };
-
-  const elements = {
-    line: {
-      tension: 0.4,
-      fill:true
-    }
-  };
-
-  // end of common configs
 
   const ctx_prs_days_open_2023 = document.getElementById('prs_days_open_2023');
   const ctx_prs_days_open_2022 = document.getElementById('prs_days_open_2022');

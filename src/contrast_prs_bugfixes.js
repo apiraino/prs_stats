@@ -3,68 +3,11 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 Chart.register(zoomPlugin);
 
 import data_contrast_2023 from '../2023_contrast_prs_bugfixes.json';
-import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
+import data_contrast_2022 from '../test.json';
 import data_contrast_2021 from '../2021_contrast_prs_bugfixes.json';
+import { plugins, scales, elements } from './common';
 
 (async function() {
-
-  const zoomOptions = {
-    pan: {
-      enabled:true,
-      mode: 'xy'
-    },
-    limits: {
-      x: {min: 0, max: 'original'},
-      y: {min: 0, max: 'original'},
-    },
-    // zoom is enabled by event onClick
-    zoom: {
-      wheel: {
-        enabled: false
-      },
-      pinch: {
-        enabled: false
-      },
-      mode: 'xy'
-    },
-  };
-  const zoomStatus = () => 'Zoom: ' + (zoomOptions.zoom.wheel.enabled ? 'enabled' : 'disabled');
-
-  const scales = {
-    x: {
-      title: {display:true, text:'Week of the year', font:{size:24}}
-    },
-    y: {
-      title: {display:true, text:'Num PRs', font:{size:24}}
-    },
-  };
-
-  const plugins = {
-    zoom: zoomOptions,
-    legend: {
-      labels: {
-        font: {
-          size:24
-        }
-      },
-    },
-    title: {
-      display:true,
-      font: {
-        size:24
-      },
-      text: 'Change me ...',
-    }
-  };
-
-  const elements = {
-    line: {
-      tension: 0.4,
-      fill:true
-    }
-  };
-
-  // end of common configs
 
   const ctx_contrast_2023 = document.getElementById('2023_contrast_prs_bugfixes');
   const ctx_contrast_2022 = document.getElementById('2022_contrast_prs_bugfixes');
