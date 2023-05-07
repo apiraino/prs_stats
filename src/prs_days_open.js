@@ -9,7 +9,7 @@ import data_prs_days_open_2020 from '../2020.json';
 
 (async function() {
 
-  var opts = {
+  const opts = {
     scales: {
       x: {
         //stacked:true,
@@ -60,7 +60,7 @@ import data_prs_days_open_2020 from '../2020.json';
         font: {
           size:24
         },
-        text: 'Default title'
+        text: 'Change me ...'
       }
     }
   }
@@ -74,6 +74,16 @@ import data_prs_days_open_2020 from '../2020.json';
   //   }
   // ];
 
+  // clone config and change title for each graph
+  var opts_2023 = structuredClone(opts);
+  var opts_2022 = structuredClone(opts);
+  var opts_2021 = structuredClone(opts);
+  var opts_2020 = structuredClone(opts);
+  opts_2023.plugins.title.text='[2023] How long are PRs sitting open before being closed?'
+  opts_2022.plugins.title.text='[2022] How long are PRs sitting open before being closed?'
+  opts_2021.plugins.title.text='[2021] How long are PRs sitting open before being closed?'
+  opts_2020.plugins.title.text='[2020] How long are PRs sitting open before being closed?'
+
   const ctx_prs_days_open_2023 = document.getElementById('prs_days_open_2023');
   const ctx_prs_days_open_2022 = document.getElementById('prs_days_open_2022');
   const ctx_prs_days_open_2021 = document.getElementById('prs_days_open_2021');
@@ -86,12 +96,11 @@ import data_prs_days_open_2020 from '../2020.json';
   // })
 
   // PRs closed in 2023
-  opts.plugins.title.text='[2023] How long are PRs sitting open before being closed?'
-  var chart_1 = new Chart(
+  const chart_2023 = new Chart(
     ctx_prs_days_open_2023,
     {
       type: 'line',
-      options: opts,
+      options: opts_2023,
       data: {
         labels: data_prs_days_open_2023.map(row => row.woy),
         datasets: [
@@ -114,15 +123,13 @@ import data_prs_days_open_2020 from '../2020.json';
       },
     }
   );
-  // chart_1.actions = actions
 
   // PRs closed in 2022
-  opts.plugins.title.text='[2022] How long are PRs sitting open before being closed?'
-  var chart_2 = new Chart(
+  const chart_2022 = new Chart(
     ctx_prs_days_open_2022,
     {
       type: 'line',
-      options: opts,
+      options: opts_2022,
       data: {
         labels: data_prs_days_open_2022.map(row => row.woy),
         datasets: [
@@ -145,16 +152,13 @@ import data_prs_days_open_2020 from '../2020.json';
       },
     }
   );
-  // chart_2.actions = actions
-
 
   // PRs closed in 2021
-  opts.plugins.title.text='[2021] How long are PRs sitting open before being closed?'
-  var chart_3 = new Chart(
+  const chart_2021 = new Chart(
     ctx_prs_days_open_2021,
     {
       type: 'line',
-      options: opts,
+      options: opts_2021,
       data: {
         labels: data_prs_days_open_2021.map(row => row.woy),
         datasets: [
@@ -177,15 +181,13 @@ import data_prs_days_open_2020 from '../2020.json';
       },
     }
   );
-  // chart_3.actions = actions
 
   // PRs closed in 2020
-  opts.plugins.title.text='[2020] How long are PRs sitting open before being closed?'
-  var chart_4 = new Chart(
+  var chart_2020 = new Chart(
     ctx_prs_days_open_2020,
     {
       type: 'line',
-      options: opts,
+      options: opts_2020,
       data: {
         labels: data_prs_days_open_2020.map(row => row.woy),
         datasets: [
@@ -208,6 +210,5 @@ import data_prs_days_open_2020 from '../2020.json';
       },
     }
   );
-  // chart_4.actions = actions
 
 })();

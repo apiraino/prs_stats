@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel src/index.html",
+    "dev": "parcel -p 8000 --dist-dir docs src/index.html",
+    "help": "parcel help",
     "build": "parcel build --public-url /prs_stats --dist-dir docs src/index.html"
   },
   "devDependencies": {

@@ -2,18 +2,20 @@
 <html lang="en">
     <head>
         <title>How many PRS are against issues?</title>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script> -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script> -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script> -->
         <script type="module" src="contrast_prs_bugfixes.js"></script>
     </head>
     <body>
 
         <div style="width: 1000px;">
             <canvas id="2023_contrast_prs_bugfixes"></canvas>
-            <button onclick="contrast_1.resetZoom()">ZOOM RESET</button>
+            <button onclick="contrast_2023.resetZoom()">ZOOM RESET</button>
             <canvas id="2022_contrast_prs_bugfixes"></canvas>
-            <button onclick="contrast_2.resetZoom()">ZOOM RESET</button>
+            <button onclick="contrast_2022.resetZoom()">ZOOM RESET</button>
+            <canvas id="2021_contrast_prs_bugfixes"></canvas>
+            <button onclick="contrast_2021.resetZoom()">ZOOM RESET</button>
         </div>
 
     </body>

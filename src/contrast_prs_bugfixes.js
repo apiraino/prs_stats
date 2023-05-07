@@ -4,10 +4,11 @@ Chart.register(zoomPlugin);
 
 import data_contrast_2023 from '../2023_contrast_prs_bugfixes.json';
 import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
+// import data_contrast_2021 from '../2021_contrast_prs_bugfixes.json';
 
 (async function() {
 
-  var opts = {
+  const opts = {
     plugins: {
       zoom: {
         pan: {
@@ -39,8 +40,8 @@ import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
         display:true,
         font: {
           size:24
-        }
-        // text: 'Change me ....',
+        },
+        text: 'Change me ...',
       }
     },
     scales: {
@@ -59,6 +60,14 @@ import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
     }
   }
 
+  // clone config and change title for each graph
+  var opts_2023 = structuredClone(opts);
+  var opts_2022 = structuredClone(opts);
+  var opts_2021 = structuredClone(opts);
+  opts_2023.plugins.title.text='[2023] Contrast PRs and bugfixes'
+  opts_2022.plugins.title.text='[2022] Contrast PRs and bugfixes'
+  opts_2021.plugins.title.text='[2021] Contrast PRs and bugfixes'
+
   // const actions = [
   //   {
   //     name: 'Reset zoom',
@@ -71,14 +80,14 @@ import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
 
   const ctx_contrast_2023 = document.getElementById('2023_contrast_prs_bugfixes');
   const ctx_contrast_2022 = document.getElementById('2022_contrast_prs_bugfixes');
+  const ctx_contrast_2021 = document.getElementById('2021_contrast_prs_bugfixes');
 
   // PRs closed in 2023
-  opts.plugins.title.text='[2023] Contrast PRs and bugfixes'
-  var contrast_1 = new Chart(
+  const contrast_2023 = new Chart(
     ctx_contrast_2023,
     {
       type: 'line',
-      options: opts,
+      options: opts_2023,
       data: {
         labels: data_contrast_2023.map(row => row.woy),
         datasets: [
@@ -97,15 +106,14 @@ import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
     }
   );
   // XXX: maybe not needed
-  // contrast_1.actions = actions
+  // contrast_2023.actions = actions
 
   // PRs closed in 2022
-  opts.plugins.title.text='[2022] Contrast PRs and bugfixes'
-  var contrast_2 = new Chart(
+  const contrast_2022 = new Chart(
     ctx_contrast_2022,
     {
       type: 'line',
-      options: opts,
+      options: opts_2022,
       data: {
         labels: data_contrast_2022.map(row => row.woy),
         datasets: [
@@ -118,12 +126,35 @@ import data_contrast_2022 from '../2022_contrast_prs_bugfixes.json';
             label: 'PRs',
             data: data_contrast_2022.map(row => row.num_prs),
             backgroundColor: '#66b237'
-
           },
         ]
       },
     }
   );
-  // contrast_2.actions = actions
+
+  // PRs closed in 2021
+  // opts.plugins.title.text='[2021] Contrast PRs and bugfixes'
+  // var contrast_2021 = new Chart(
+  //   ctx_contrast_2021,
+  //   {
+  //     type: 'line',
+  //     options: opts,
+  //     data: {
+  //       labels: data_contrast_2021.map(row => row.woy),
+  //       datasets: [
+  //         {
+  //           label: 'Bugfixes',
+  //           data: data_contrast_2021.map(row => row.num_bugfixes),
+  //           backgroundColor: 'orange'
+  //         },
+  //         {
+  //           label: 'PRs',
+  //           data: data_contrast_2021.map(row => row.num_prs),
+  //           backgroundColor: '#66b237'
+  //         },
+  //       ]
+  //     },
+  //   }
+  // );
 
 })();
