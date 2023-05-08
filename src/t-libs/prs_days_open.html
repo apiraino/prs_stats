@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>How long stay PRs open?</title>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+             <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+             <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script> -->
+        <script type="module" src="prs_days_open.js"></script>
+    </head>
+    <body>
+        <div style="width: 1000px;">
+            <canvas id="prs_days_open_2023"></canvas>
+            <button onclick="resetZoomBtn2023();">ZOOM RESET</button>
+            <canvas id="prs_days_open_2022"></canvas>
+            <button onclick="resetZoomBtn2022();">ZOOM RESET</button>
+            <canvas id="prs_days_open_2021"></canvas>
+            <button onclick="resetZoomBtn2021();">ZOOM RESET</button>
+            <canvas id="prs_days_open_2020"></canvas>
+            <button onclick="resetZoomBtn2020();">ZOOM RESET</button>
+        </div>
+    </body>
+</html>

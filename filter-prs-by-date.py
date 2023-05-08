@@ -4,16 +4,6 @@ from utils import *
 
 SRC_FILE = "prs.json"
 
-
-def bail_out(msg, err_code=0):
-    print(msg)
-    sys.exit(err_code)
-
-
-def eprintln(msg):
-    sys.stderr.write("{}\n".format(msg))
-
-
 if len(sys.argv) < 2:
     bail_out("./filter-prs-by-date.py <from: YYYY-MM-DD> <to: YYYY-MM-DD> > data.dat")
 
@@ -31,12 +21,10 @@ eprintln("Filtering data: from {} to {}".format(from_date, to_date))
 # ex. 2016-11-03T04:49:05Z
 date_format = "%Y-%m-%dT%H:%M:%SZ"
 
-# TODO: split teams
-output = {}
 output_tcompiler = {}
 output_tlibs = {}
+output_trustdoc = {}
 output_tcompiler_tlibs = {}
-output_tdocs = {}
 
 # up to X days
 time_1 = 10
@@ -48,16 +36,38 @@ time_3 = 60
 # How long are PRs sitting before being closed?
 for pr in data:
     obj = {}
+    output = {}
     counter_1 = 0
     counter_2 = 0
     counter_3 = 0
     _close = datetime.strptime(pr["closed_at"], date_format)
     if _close < from_date or _close > to_date:
         continue
-    eprintln("Closing date: {}".format(_close))
+    # Skip rollup PRs
+    if pr["title"].startswith("Rollup"):
+        continue
+    eprintln("#{}: closing date: {}".format(pr["number"], _close))
     curr_week = _close.strftime("%W")
     # ex. ['T-compiler', 'S-waiting-on-bors', 'merged-by-bors']
     labels = [x["name"] for x in pr["labels"]]
+    labels.sort()
+
+    # XXX: isolate S-blocked closed pull requests
+    # Should labelling be fixed?
+    # if "S-blocked" in labels:
+    #     eprintln("#{} labels: {}".format(pr["number"], labels))
+
+    # somewhat loose team classification, not 100% correct
+    # does not take into account all shades of grey
+    if "T-compiler" in labels:
+        output = output_tcompiler
+    if "T-rustdoc" in labels:
+        output = output_trustdoc
+    if "T-libs" in labels or "T-libs-api" in labels:
+        output = output_tlibs
+        if "T-compiler" in labels:
+            output = output_tcompiler_tlibs
+    # eprintln("#{} label: {} so output is {}".format(pr["number"], labels, output))
 
     # calculate how many days has been this PR open
     _create = datetime.strptime(pr["created_at"], date_format)
@@ -99,37 +109,43 @@ for pr in data:
             "time_3": output[idx]["time_3"] + counter_3,
         }
 
-    # dump week data and reset counters for the new week
+    # dump week data
     output.update({curr_week: obj})
-    eprintln(
-        "[W{}] {} {} {}".format(
-            curr_week,
-            counter_1,
-            counter_2,
-            counter_3,
-        )
-    )
-
-json_data = []
-for w in output:
-    obj = {
-        "woy": w,
-        "up_to_10": output[w]["time_1"],
-        "up_to_30": output[w]["time_1"] + output[w]["time_2"],
-        "over_60": output[w]["time_1"] + output[w]["time_2"] + output[w]["time_3"],
-    }
-    json_data.append(obj)
-
-    # for GNUplot
-    # print(
-    #     "{} {} {} {}".format(
-    #         k,
-    #         output[k]["time_1"],
-    #         output[k]["time_1"] + output[k]["time_2"],
-    #         output[k]["time_1"] + output[k]["time_2"] + output[k]["time_3"],
+    # eprintln(
+    #     "[W{}] {} {} {}".format(
+    #         curr_week,
+    #         counter_1,
+    #         counter_2,
+    #         counter_3,
     #     )
     # )
 
-# sort by week of year
-json_data.sort(key=lambda item: item["woy"])
-print(json.dumps(json_data))
+for _out in [output_tcompiler, output_tlibs, output_trustdoc, output_tcompiler_tlibs]:
+    dst_file = "ooops.json"
+    if _out == output_tcompiler:
+        dst_file = "tcompiler.json"
+    if _out == output_tlibs:
+        dst_file = "tlibs.json"
+    if _out == output_trustdoc:
+        dst_file = "trustdoc.json"
+    if _out == output_tcompiler_tlibs:
+        dst_file = "tcompiler_tlibs.json"
+
+    json_data = []
+    for w in _out:
+        obj = {
+            "woy": w,
+            "up_to_10": _out[w]["time_1"],
+            "up_to_30": _out[w]["time_1"] + _out[w]["time_2"],
+            "over_60": _out[w]["time_1"] + _out[w]["time_2"] + _out[w]["time_3"],
+        }
+        json_data.append(obj)
+    # sort by week of year
+    json_data.sort(key=lambda item: item["woy"])
+    # print(json.dumps(json_data))
+
+    with open(dst_file, "w") as f:
+        f.write(json.dumps(json_data))
+        eprintln("File {} saved".format(dst_file))
+
+eprintln("FINISHED")

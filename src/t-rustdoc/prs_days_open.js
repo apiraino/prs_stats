@@ -2,11 +2,11 @@ import Chart from 'chart.js/auto'
 import zoomPlugin from 'chartjs-plugin-zoom';
 Chart.register(zoomPlugin);
 
-import data_prs_days_open_2023 from './data/t-compiler/2023.json';
-import data_prs_days_open_2022 from './data/t-compiler/2022.json';
-import data_prs_days_open_2021 from './data/t-compiler/2021.json';
-import data_prs_days_open_2020 from './data/t-compiler/2020.json';
-import { plugins, scales, elements } from './common';
+import data_prs_days_open_2023 from '../data/t-rustdoc/2023.json';
+import data_prs_days_open_2022 from '../data/t-rustdoc/2022.json';
+import data_prs_days_open_2021 from '../data/t-rustdoc/2021.json';
+import data_prs_days_open_2020 from '../data/t-rustdoc/2020.json';
+import { plugins, scales, elements } from '../common';
 
 (async function() {
 
