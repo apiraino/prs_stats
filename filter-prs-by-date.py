@@ -17,7 +17,6 @@ def eprintln(msg):
 if len(sys.argv) < 2:
     bail_out("./filter-prs-by-date.py <from: YYYY-MM-DD> <to: YYYY-MM-DD> > data.dat")
 
-
 if not os.path.exists(SRC_FILE):
     bail_out("Source file {} missing. Run get-all-prs.py first".format(SRC_FILE))
 else:
@@ -31,8 +30,13 @@ to_date = datetime.strptime(sys.argv[2], date_fmt)
 eprintln("Filtering data: from {} to {}".format(from_date, to_date))
 # ex. 2016-11-03T04:49:05Z
 date_format = "%Y-%m-%dT%H:%M:%SZ"
+
+# TODO: split teams
 output = {}
-# prev_week = None
+output_tcompiler = {}
+output_tlibs = {}
+output_tcompiler_tlibs = {}
+output_tdocs = {}
 
 # up to X days
 time_1 = 10
@@ -40,10 +44,6 @@ time_1 = 10
 time_2 = 30
 # over Z days
 time_3 = 60
-
-# counter_1 = 0
-# counter_2 = 0
-# counter_3 = 0
 
 # How long are PRs sitting before being closed?
 for pr in data:
@@ -56,9 +56,8 @@ for pr in data:
         continue
     eprintln("Closing date: {}".format(_close))
     curr_week = _close.strftime("%W")
-    # if not prev_week:
-    #     prev_week = curr_week
-    # eprintln("Week is {}".format(curr_week))
+    # ex. ['T-compiler', 'S-waiting-on-bors', 'merged-by-bors']
+    labels = [x["name"] for x in pr["labels"]]
 
     # calculate how many days has been this PR open
     _create = datetime.strptime(pr["created_at"], date_format)
@@ -110,24 +109,6 @@ for pr in data:
             counter_3,
         )
     )
-    # counter_1 = 0
-    # counter_2 = 0
-    # counter_3 = 0
-
-    # _create = datetime.strptime(pr["created_at"], date_format)
-    # days_open = (_close - _create).days
-    # eprintln(
-    #     "{} #{} closed on {} was open for {}d".format(
-    #         curr_week, pr["number"], _close.strftime(date_fmt), days_open
-    #     )
-    # )
-    # if days_open <= time_1:
-    #     counter_1 = counter_1 + 1
-    # elif time_2 > days_open < time_3:
-    #     counter_2 = counter_2 + 1
-    # else:
-    #     counter_3 = counter_3 + 1
-    # prev_week = curr_week
 
 json_data = []
 for w in output:

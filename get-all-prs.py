@@ -5,7 +5,7 @@ from utils import *
 # Retrieve a list of PRs
 
 # checked the number on the github repo
-TOTAL_CLOSED_PRS = 60601
+TOTAL_CLOSED_PRS = 62029
 PER_PAGE = 100
 MAX_PAGES = TOTAL_CLOSED_PRS / PER_PAGE
 # more or less observed
@@ -35,9 +35,6 @@ def list_prs():
         url = "{}/repos/rust-lang/rust/pulls?state=closed&direction=desc&sort=updated&per_page={}&page={}".format(
             API_URL, PER_PAGE, page
         )
-        url = "{}/repos/rust-lang/rust/pulls?state=closed&direction=desc&sort=updated&per_page={}&page={}".format(
-            API_URL, PER_PAGE, page
-        )
 
         try:
             r = requests.get(url, headers=headers)
@@ -58,14 +55,6 @@ def list_prs():
                 r.raise_for_status()
         data = r.json()
         output.extend(data)
-        # j = r.json()
-        # if "items" not in j:
-        #     pu.db
-        #     break
-        # data = j["items"]
-        # if len(data) == 0:
-        #     break
-        # output.extend(r.json()["items"])
         eprintln("Got page {}: #{} total prs".format(page, len(output)))
         page = page + 1
     return json.dumps(output)
