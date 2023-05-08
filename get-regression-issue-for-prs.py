@@ -15,7 +15,9 @@ def eprintln(msg):
 
 
 if len(sys.argv) < 2:
-    bail_out("./filter-prs-by-date.py <from: YYYY-MM-DD> <to: YYYY-MM-DD> > data.dat")
+    bail_out(
+        "./get-regression-issue-for-prs.py <from: YYYY-MM-DD> <to: YYYY-MM-DD> > data.dat"
+    )
 
 if not os.path.exists(SRC_FILE):
     bail_out("Source file {} missing. Run get-all-prs.py first".format(SRC_FILE))
@@ -30,17 +32,36 @@ to_date = datetime.strptime(sys.argv[2], date_fmt)
 eprintln("Filtering data: from {} to {}".format(from_date, to_date))
 # ex. 2016-11-03T04:49:05Z
 date_format = "%Y-%m-%dT%H:%M:%SZ"
-output = {}
+
+output_tcompiler = {}
+output_tlibs = {}
+output_trustdoc = {}
+output_tcompiler_tlibs = {}
 
 for pr in data:
     obj = {}
+    output = {}
     issue = 0
     _close = datetime.strptime(pr["closed_at"], date_format)
     if _close < from_date or _close > to_date:
         continue
+    # skip rollups
+    if pr["title"].startswith("Rollup"):
+        continue
     # eprintln("Closing date: {}".format(_close))
     curr_week = _close.strftime("%W")
     eprintln("\nCurrent week is {}".format(curr_week))
+    labels = [x["name"] for x in pr["labels"]]
+    labels.sort()
+
+    if "T-compiler" in labels:
+        output = output_tcompiler
+    if "T-rustdoc" in labels:
+        output = output_trustdoc
+    if "T-libs" in labels or "T-libs-api" in labels:
+        output = output_tlibs
+        if "T-compiler" in labels:
+            output = output_tcompiler_tlibs
 
     # retrieve an issue connected to this PR
     issue = get_regression_issue(pr["number"])
@@ -71,15 +92,32 @@ for pr in data:
     output.update({curr_week: obj})
     eprintln("[W{}] {}".format(curr_week, obj))
 
-json_data = []
-for w in output:
-    obj = {
-        "woy": w,
-        "num_prs": output[w]["num_prs"],
-        "num_bugfixes": output[w]["num_bugfixes"],
-    }
-    json_data.append(obj)
 
-# sort by week of year
-json_data.sort(key=lambda item: item["woy"])
-print(json.dumps(json_data))
+for _out in [output_tcompiler, output_tlibs, output_trustdoc, output_tcompiler_tlibs]:
+    dst_file = "ooops.json"
+    if _out == output_tcompiler:
+        dst_file = "tcompiler.json"
+    if _out == output_tlibs:
+        dst_file = "tlibs.json"
+    if _out == output_trustdoc:
+        dst_file = "trustdoc.json"
+    if _out == output_tcompiler_tlibs:
+        dst_file = "tcompiler_tlibs.json"
+
+    json_data = []
+    for w in _out:
+        obj = {
+            "woy": w,
+            "num_prs": _out[w]["num_prs"],
+            "num_bugfixes": _out[w]["num_bugfixes"],
+        }
+        json_data.append(obj)
+    # sort by week of year
+    json_data.sort(key=lambda item: item["woy"])
+    # print(json.dumps(json_data))
+
+    with open(dst_file, "w") as f:
+        f.write(json.dumps(json_data))
+        eprintln("File {} saved".format(dst_file))
+
+eprintln("FINISHED")
