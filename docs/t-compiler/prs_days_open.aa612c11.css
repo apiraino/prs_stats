@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: stretch;
+  display: flex;
+}
+
+.child {
+  min-width: 500px;
+  flex: 50%;
+}
+
+/*# sourceMappingURL=prs_days_open.aa612c11.css.map */

@@ -1,0 +1,1 @@
+{"mappings":"AAAA;;;;;;;AAMA","sources":["src/css/style.css"],"sourcesContent":[".container {\n  width: 100%;\n  display: flex;\n  flex-wrap: wrap;\n  align-items: stretch;\n}\n.child {\n  flex-grow: 1;\n  min-width: 500px;\n  flex-basis: 50%;\n  flex-shrink: 1;\n}\n"],"names":[],"version":3,"file":"prs_days_open.aa612c11.css.map","sourceRoot":"/__parcel_source_root/"}

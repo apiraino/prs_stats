@@ -5,18 +5,23 @@
         <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script> -->
         <!-- <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script> -->
         <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script> -->
-        <script type="module" src="contrast_prs_bugfixes.js"></script>
+        <link rel="stylesheet" href="../css/style.css">
     </head>
     <body>
-
-        <div style="width: 1000px;">
-            <canvas id="2023_contrast_prs_bugfixes"></canvas>
-            <button onclick="resetZoomBtn2023()">reset zoom</button>
-            <canvas id="2022_contrast_prs_bugfixes"></canvas>
-            <button onclick="resetZoomBtn2022()">reset zoom</button>
-            <canvas id="2021_contrast_prs_bugfixes"></canvas>
-            <button onclick="resetZoomBtn2021()">reset zoom</button>
+        <div class="container">
+            <div class="child">
+                <canvas id="2023_contrast_prs_bugfixes"></canvas>
+                <button onclick="resetZoomBtn2023()">reset zoom</button>
+            </div>
+            <div class="child">
+                <canvas id="2022_contrast_prs_bugfixes"></canvas>
+                <button onclick="resetZoomBtn2022()">reset zoom</button>
+            </div>
+            <div class="child">
+                <canvas id="2021_contrast_prs_bugfixes"></canvas>
+                <button onclick="resetZoomBtn2021()">reset zoom</button>
+            </div>
         </div>
-
+        <script type="module" src="contrast_prs_bugfixes.js"></script>
     </body>
 </html>
