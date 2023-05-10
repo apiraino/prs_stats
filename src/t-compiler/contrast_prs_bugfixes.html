@@ -7,18 +7,23 @@
         <script src="../js/chartjs-plugin-zoom.min.js"></script>
         <script src="../js/data_prs_days_open.t-compiler.js"></script>
         <script src="../js/common.js"></script>
-        <script type="module" src="contrast_prs_bugfixes.js"></script>
+        <link rel="stylesheet" href="../css/style.css">
     </head>
     <body>
 
-        <div style="width: 100%;">
-            <canvas id="2023_contrast_prs_bugfixes"></canvas>
-            <button onclick="resetZoomBtn2023()">reset zoom</button>
-            <canvas id="2022_contrast_prs_bugfixes"></canvas>
-            <button onclick="resetZoomBtn2022()">reset zoom</button>
-            <canvas id="2021_contrast_prs_bugfixes"></canvas>
-            <button onclick="resetZoomBtn2021()">reset zoom</button>
-        </div>
-
+        <div class="container">
+            <div class="child">
+                <canvas id="2023_contrast_prs_bugfixes"></canvas>
+                <button onclick="resetZoomBtn2023()">reset zoom</button>
+            </div>
+            <div class="child">
+                <canvas id="2022_contrast_prs_bugfixes"></canvas>
+                <button onclick="resetZoomBtn2022()">reset zoom</button>
+            </div>
+            <div class="child">
+                <canvas id="2021_contrast_prs_bugfixes"></canvas>
+                <button onclick="resetZoomBtn2021()">reset zoom</button>
+            </div>
     </body>
+    <script src="contrast_prs_bugfixes.js"></script>
 </html>

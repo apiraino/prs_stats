@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.child {
+  flex-grow: 1;
+  min-width: 500px;
+  flex-basis: 50%;
+  flex-shrink: 1;
+}
