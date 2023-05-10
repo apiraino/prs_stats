@@ -5,15 +5,6 @@ from utils import *
 SRC_FILE = "prs.json"
 
 
-def bail_out(msg, err_code=0):
-    print(msg)
-    sys.exit(err_code)
-
-
-def eprintln(msg):
-    sys.stderr.write("{}\n".format(msg))
-
-
 if len(sys.argv) < 2:
     bail_out(
         "./get-regression-issue-for-prs.py <from: YYYY-MM-DD> <to: YYYY-MM-DD> > data.dat"
