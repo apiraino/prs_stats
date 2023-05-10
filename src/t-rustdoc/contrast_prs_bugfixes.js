@@ -1,12 +1,3 @@
-import Chart from 'chart.js/auto'
-import zoomPlugin from 'chartjs-plugin-zoom';
-Chart.register(zoomPlugin);
-
-import data_contrast_2023 from '../data/t-rustdoc/2023_contrast_prs_bugfixes.json';
-import data_contrast_2022 from '../data/t-rustdoc/2022_contrast_prs_bugfixes.json';
-import data_contrast_2021 from '../data/t-rustdoc/2021_contrast_prs_bugfixes.json';
-import { plugins, scales, elements } from '../common';
-
 (async function() {
 
   const ctx_contrast_2023 = document.getElementById('2023_contrast_prs_bugfixes');
@@ -140,15 +131,15 @@ import { plugins, scales, elements } from '../common';
     config_2021
   );
 
-  const resetZoomBtn2023 = () => {
+  window.resetZoomBtn2023 = () => {
     contrast_2023.resetZoom()
   };
 
-  const resetZoomBtn2022 = () => {
+  window.resetZoomBtn2022 = () => {
     contrast_2022.resetZoom()
   };
 
-  const resetZoomBtn2021 = () => {
+  window.resetZoomBtn2021 = () => {
     contrast_2021.resetZoom()
   };
 

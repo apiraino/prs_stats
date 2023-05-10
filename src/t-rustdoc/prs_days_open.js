@@ -1,14 +1,6 @@
-import Chart from 'chart.js/auto'
-import zoomPlugin from 'chartjs-plugin-zoom';
-Chart.register(zoomPlugin);
-
-import data_prs_days_open_2023 from '../data/t-rustdoc/2023.json';
-import data_prs_days_open_2022 from '../data/t-rustdoc/2022.json';
-import data_prs_days_open_2021 from '../data/t-rustdoc/2021.json';
-import data_prs_days_open_2020 from '../data/t-rustdoc/2020.json';
-import { plugins, scales, elements } from '../common';
-
 (async function() {
+
+
 
   const ctx_prs_days_open_2023 = document.getElementById('prs_days_open_2023');
   const ctx_prs_days_open_2022 = document.getElementById('prs_days_open_2022');
@@ -203,19 +195,19 @@ import { plugins, scales, elements } from '../common';
     config_2020
   );
 
-  const resetZoomBtn2023 = () => {
+  window.resetZoomBtn2023 = () => {
     chart_2023.resetZoom()
   };
 
-  const resetZoomBtn2022 = () => {
+  window.resetZoomBtn2022 = () => {
     chart_2022.resetZoom()
   };
 
-  const resetZoomBtn2021 = () => {
+  window.resetZoomBtn2021 = () => {
     chart_2021.resetZoom()
   };
 
-  const resetZoomBtn2020 = () => {
+  window.resetZoomBtn2020 = () => {
     chart_2020.resetZoom()
   };
 
