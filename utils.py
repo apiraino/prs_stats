@@ -16,10 +16,11 @@ from gql.transport.exceptions import TransportQueryError
 
 API_URL = "https://api.github.com"
 API_TOKEN = os.getenv("API_TOKEN")
+API_TOKEN_2 = os.getenv("API_TOKEN_2")
 # between pages to reduce chances of being throttled
 WAIT_SECS = 0.5
 PER_PAGE = 50
-# when I get throttled, try this many timwes then adbicate and save the data so far
+# when I get throttled, try this many timwes then give up and save the data so far
 MAX_TRIES_WHEN_THROTTLED = 5
 ERR_GIVEUP = -1
 RETRY = -2
@@ -39,6 +40,7 @@ transport = RequestsHTTPTransport(
 )
 
 client = Client(transport=transport, fetch_schema_from_transport=True)
+client_2 = Client(transport=transport, fetch_schema_from_transport=True)
 
 
 def bail_out(msg, err_code=0):
@@ -51,6 +53,14 @@ def eprintln(msg):
 
 
 def get_review_comments(review_comment_url):
+    # alternate API tokens to (hopefully) work around the throttling
+    odd = False
+    if odd:
+        headers["Authorization"] = ("Bearer {}".format(API_TOKEN),)
+        odd = False
+    else:
+        headers["Authorization"] = ("Bearer {}".format(API_TOKEN_2),)
+        odd = True
     tries = 0
     res = RETRY
     while res == RETRY:
@@ -61,9 +71,9 @@ def get_review_comments(review_comment_url):
     return res
 
 
-def _get_review_comments(review_comments_url):
+def _get_review_comments(_headers, review_comments_url):
     url = "{}?per_page={}".format(review_comments_url, PER_PAGE)
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=_headers)
     if r.status_code != 200:
         if r.status_code == 422:
             return RETRY
@@ -83,8 +93,15 @@ def in_range(dt, _from, _to):
 def get_regression_issue(pr_num):
     tries = 0
     res = RETRY
+    odd = False
+    if odd:
+        _client = client
+        odd = False
+    else:
+        _client = client_2
+        odd = True
     while res == RETRY:
-        res = _get_regression_issue(pr_num)
+        res = _get_regression_issue(_client, pr_num)
         if tries >= MAX_TRIES_WHEN_THROTTLED:
             eprintln("ERROR: give up, we're being throttled :(")
             return ERR_GIVEUP
@@ -93,11 +110,11 @@ def get_regression_issue(pr_num):
     return res
 
 
-def _get_regression_issue(pr_num):
+def _get_regression_issue(_client, pr_num):
     query = f"""query Test2 {{repository(owner: "rust-lang", name: "rust") {{pullRequest(number: {pr_num}) {{closingIssuesReferences(first: 10) {{nodes {{number}}}}}}}}}}"""
     query = gql(query)
     try:
-        result = client.execute(query)
+        result = _client.execute(query)
     except TransportQueryError as e:
         # gql.transport.exceptions.TransportQueryError: {'type': 'RATE_LIMITED', 'message': 'API rate limit exceeded for user ID 123456.'}
         if e.errors[0]["type"] == "RATE_LIMITED":
@@ -113,3 +130,15 @@ def _get_regression_issue(pr_num):
         return 1
     eprintln("PR #{} has NO issue linked".format(pr_num))
     return 0
+
+
+def set_bookmark(_id):
+    with open(".bookmark", "w") as f:
+        f.write(_id)
+
+
+def get_bookmark(_id):
+    pr_num = 0
+    with open(".bookmark", "r") as f:
+        pr_num = f.read(_id)
+    return pr_num
