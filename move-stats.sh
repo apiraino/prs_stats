@@ -8,9 +8,9 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-#mv $1_tcompiler_prs_open_days.json src/data/t-compiler/$1_prs_open_days.json
-#mv $1_tlibs_prs_open_days.json src/data/t-libs/$1_prs_open_days.json
-#mv $1_trustdoc_prs_open_days.json src/data/t-rustdoc/$1_prs_open_days.json
+mv $1_tcompiler_prs_open_days.json src/data/t-compiler/$1_prs_open_days.json
+mv $1_tlibs_prs_open_days.json src/data/t-libs/$1_prs_open_days.json
+mv $1_trustdoc_prs_open_days.json src/data/t-rustdoc/$1_prs_open_days.json
 # how about this?
 # mv $1_tcompiler_tlibs_prs_open_days.json
 

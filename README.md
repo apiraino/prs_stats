@@ -36,7 +36,6 @@ Output files are in `./prs_stats`. Test deployed compiled .js with any http loca
 
 These scripts will fetch and process the pull requests data. Directory `./src/data` constains all .json files used by the website.
 
-
 Use `move-stats.sh` to move the JSON files into the proper folders.
 
 Use `import-data.py` to generate the .js file to be included in the HTML pages.
@@ -70,6 +69,7 @@ Use `import-data.py` to generate the .js file to be included in the HTML pages.
 - <del>alternate API tokens to work around throttling</del> (does not work)
 - exclude noise by excluding time elapsed from `r+` to actual issue closing
 - why is a PR actually taking long to be closed? Give evidence if there was a lot of discussion and comments or was just sitting there unattended
+- maybe overlay candle/violin representation of max,min,avg in PRs age ([see here how](https://github.com/jackh726/rust-pr-explorer/commit/7f9567b73debeff6afa0be3899ed13b8c2c2eedf#diff-26ad4b834941d9b19ebf9db8082bd202aaf72ea0ddea85f5a8a0cb3c729cc6f2R377))
 
 ## Frontend to set your review capacity
 

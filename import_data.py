@@ -39,6 +39,9 @@ t_rustdoc_mappings = [
 def populate(dst_file, src_arr):
     with open(dst_file, "w") as out:
         for f, js_obj in src_arr:
+            if not os.path.exists(f):
+                print("Skipping file {}".format(f))
+                continue
             with open(f, "r") as fp:
                 out.write("const {} = JSON.parse(`{}`);\n".format(js_obj, fp.read()))
 
