@@ -36,6 +36,11 @@ Output files are in `./prs_stats`. Test deployed compiled .js with any http loca
 
 These scripts will fetch and process the pull requests data. Directory `./src/data` constains all .json files used by the website.
 
+
+Use `move-stats.sh` to move the JSON files into the proper folders.
+
+Use `import-data.py` to generate the .js file to be included in the HTML pages.
+
 1. Download the entire PRs corpus from [rust-lang/rust](https://github.com/rust-lang/rust/pulls) (+6K pull requests, will take hours! Final dump is about 1GB uncompressed)
 
 ``` sh
@@ -46,13 +51,15 @@ These scripts will fetch and process the pull requests data. Directory `./src/da
 
 ``` sh
 # filters all PRs in Q1/2023
-./filter-prs-by-date.py 2023-01-01 2023-04-30 > src/data/t-compiler/2023.json
+# output: a file for each team
+./filter-prs-by-date.py 2023-01-01 2023-04-30
 ```
 
 3. How many PRS are against issues?
 
 ``` sh
 # get all connected issues to PRs in Q1/2023
+# output: a file for each team
 ./get-regression-issue-for-prs.py 2023-01-01 2023-04-30
 ```
 
@@ -61,8 +68,8 @@ These scripts will fetch and process the pull requests data. Directory `./src/da
 - download only delta of data
 - set/get a bookmark when downloading data in case the process is interrupted
 - <del>alternate API tokens to work around throttling</del> (does not work)
-- exclude noise by excluding time elapsed from r+ to actual issue closing
-- why is a PR actually taking long to be closed? Give evidence if there was a lot of discussion and comments or just was sitting there unattended
+- exclude noise by excluding time elapsed from `r+` to actual issue closing
+- why is a PR actually taking long to be closed? Give evidence if there was a lot of discussion and comments or was just sitting there unattended
 
 ## Frontend to set your review capacity
 
