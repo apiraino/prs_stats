@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Review settings backoffice</title>
+        <link rel="stylesheet" href="css/style.css">
+        <style>
+         td, th {
+             border: 1px solid red;
+             padding: 5px;
+         }
+         form.form-example {
+             display: table;
+         }
+
+         div.form-example {
+             display: table-row;
+         }
+
+         label,
+         input {
+             display: table-cell;
+             margin-bottom: 10px;
+         }
+
+         label {
+             padding-right: 10px;
+         }
+
+        </style>
+    </head>
+    <body>
+
+        <form action="" method="post" class="form-example">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Team member</th>
+                        <th>assigned PRs (with last review date (<a href="https://github.com/rust-lang/rust/pulls/assigned/pnkfelix">list</a>)</th>
+                        <th>Max # assigned PRs</th>
+                        <th>PTO start</th>
+                        <th>PTO end</th>
+                        <th>Feel free to ping me after # days (default: about 15/20 days)</th>
+                        <th>Publish my work queue (default: no)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href"#">@apiraino</a></td>
+                        <td>
+                            <a href="#">#12345</a> (May, 9th, 2023),
+                            <a href="#">#92384</a> (Apr, 12th, 2023)
+                            <a href="#">#95822</a> (Feb, 10th, 2023)
+                        </td>
+                        <td>
+                            <input type=number value=5>
+                        </td>
+                        <td><input type=date value=2023-11-20></td>
+                        <td><input type=date value=2023-11-30></td>
+                        <td><input type=number value=5></td>
+                        <td><input type=checkbox> I agree to have these settings visible to the team</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+    </body>
+</html>
