@@ -22,10 +22,12 @@ const zoomStatus = () => 'Zoom: ' + (zoomOptions.zoom.wheel.enabled ? 'enabled' 
 
 const scales = {
   x: {
-    title: {display:true, text:'Week of the year', font:{size:24}}
+    title: { display:true, text:'Week of the year', font:{ size:24 } },
+    stacked: true
   },
   y: {
-    title: {display:true, text:'Num PRs', font:{size:24}}
+    title: { display:true, text:'Num PRs', font:{ size:24 } },
+    stacked: true
   },
 };
 

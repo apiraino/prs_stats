@@ -31,7 +31,7 @@
   const plugins_2023 = structuredClone(plugins);
   plugins_2023.title.text='[2023] How long are PRs sitting open before being closed?'
   const config_2023 = {
-    type: 'line',
+    type: 'bar',
     data: data_2023,
     options: {
       scales: scales,
@@ -78,7 +78,7 @@
   const plugins_2022 = structuredClone(plugins);
   plugins_2022.title.text='[2022] How long are PRs sitting open before being closed?'
   const config_2022 = {
-    type: 'line',
+    type: 'bar',
     data: data_2022,
     options: {
       scales: scales,
@@ -125,7 +125,7 @@
   const plugins_2021 = structuredClone(plugins);
   plugins_2021.title.text='[2021] How long are PRs sitting open before being closed?'
   const config_2021 = {
-    type: 'line',
+    type: 'bar',
     data: data_2021,
     options: {
       scales: scales,
@@ -172,7 +172,7 @@
   const plugins_2020 = structuredClone(plugins);
   plugins_2020.title.text='[2020] How long are PRs sitting open before being closed?'
   const config_2020 = {
-    type: 'line',
+    type: 'bar',
     data: data_2020,
     options: {
       scales: scales,

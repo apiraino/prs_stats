@@ -25,7 +25,7 @@
   const plugins_2023 = structuredClone(plugins);
   plugins_2023.title.text='[2023] Contrast PRs and bugfixes'
   const config_2023 = {
-    type: 'line',
+    type: 'bar',
     data: data_2023,
     options: {
       scales: scales,
@@ -67,7 +67,7 @@
   const plugins_2022 = structuredClone(plugins);
   plugins_2022.title.text='[2022] Contrast PRs and bugfixes'
   const config_2022 = {
-    type: 'line',
+    type: 'bar',
     data: data_2022,
     options: {
       scales: scales,
@@ -110,7 +110,7 @@
   const plugins_2021 = structuredClone(plugins);
   plugins_2021.title.text='[2021] Contrast PRs and bugfixes'
   const config_2021 = {
-    type: 'line',
+    type: 'bar',
     data: data_2021,
     options: {
       scales: scales,
