@@ -2,8 +2,5 @@
 *.png
 *.json
 *.csv
-dist/
-node_modules/
-/.parcel-cache/
 /.env
 /__pycache__/
