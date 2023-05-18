@@ -120,16 +120,18 @@ for pr in data:
     #     )
     # )
 
+# we assume to work on a single year
+year = from_date.strftime("%Y")
 for _out in [output_tcompiler, output_tlibs, output_trustdoc, output_tcompiler_tlibs]:
     dst_file = "ooops.json"
     if _out == output_tcompiler:
-        dst_file = "tcompiler.json"
+        dst_file = "{}_tcompiler_prs_open_days.json".format(year)
     if _out == output_tlibs:
-        dst_file = "tlibs.json"
+        dst_file = "{}_tlibs_prs_open_days.json".format(year)
     if _out == output_trustdoc:
-        dst_file = "trustdoc.json"
+        dst_file = "{}_trustdoc_prs_open_days.json".format(year)
     if _out == output_tcompiler_tlibs:
-        dst_file = "tcompiler_tlibs.json"
+        dst_file = "{}_tcompiler_tlibs_prs_open_days.json".format(year)
 
     json_data = []
     for w in _out:

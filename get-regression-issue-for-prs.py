@@ -33,6 +33,7 @@ for pr in data:
     obj = {}
     output = {}
     issue = 0
+    # last_pr = get_bookmark(pr["number"])
     _close = datetime.strptime(pr["closed_at"], date_format)
     if _close < from_date or _close > to_date:
         continue
@@ -82,18 +83,20 @@ for pr in data:
     # add data point to the global counter
     output.update({curr_week: obj})
     eprintln("[W{}] {}".format(curr_week, obj))
+    # set_bookmark(pr["num"])
 
-
+# we assume to work on a single year
+year = from_date.strftime("%Y")
 for _out in [output_tcompiler, output_tlibs, output_trustdoc, output_tcompiler_tlibs]:
     dst_file = "ooops.json"
     if _out == output_tcompiler:
-        dst_file = "tcompiler.json"
+        dst_file = "{}_tcompiler_contrast_prs_bugfixes.json".format(year)
     if _out == output_tlibs:
-        dst_file = "tlibs.json"
+        dst_file = "{}_tlibs_contrast_prs_bugfixes.json".format(year)
     if _out == output_trustdoc:
-        dst_file = "trustdoc.json"
+        dst_file = "{}_trustdoc_contrast_prs_bugfixes.json".format(year)
     if _out == output_tcompiler_tlibs:
-        dst_file = "tcompiler_tlibs.json"
+        dst_file = "{}_tcompiler_tlibs_contrast_prs_bugfixes.json".format(year)
 
     json_data = []
     for w in _out:

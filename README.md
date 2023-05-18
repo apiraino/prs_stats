@@ -52,10 +52,34 @@ These scripts will fetch and process the pull requests data. Directory `./src/da
 3. How many PRS are against issues?
 
 ``` sh
-# filters all PRs in Q1/2023
-./get-regression-issue-for-prs.py 2023-01-01 2023-04-30 > src/data/t-compiler/2023_contrast_prs_bugfixes.json
+# get all connected issues to PRs in Q1/2023
+./get-regression-issue-for-prs.py 2023-01-01 2023-04-30
 ```
 
-## Chores
+## TODOs
 
-- Compiled .js has zoom gesture and reset button broken, to test  (on local dev env it works)
+- download only delta of data
+- set/get a bookmark when downloading data in case the process is interrupted
+- <del>alternate API tokens to work around throttling</del> (does not work)
+- exclude noise by excluding time elapsed from r+ to actual issue closing
+- why is a PR actually taking long to be closed? Give evidence if there was a lot of discussion and comments or just was sitting there unattended
+
+## Frontend to set your review capacity
+
+https://hackmd.io/GqXA4nyTQ4m__hRZUayVRg
+
+Goals:
+- Build a simple web page deployed somewhere on github rust-lang org with a few knobs for reviewers to change their settings
+- nobody needs to manually edit [this file](https://github.com/rust-lang/team/blob/master/teams/compiler.toml) to set themself in or out the rotation
+
+Tasks (more or less):
+- BE: save settings into the triagebot DB (detail DB table fields)
+- BE: settings for each contributor:
+    - # open PR assigned (with list? with last comment timestamp?)
+    - max # open pr assigned
+    - PTO start
+    - PTO end
+    - "ping me after X days"
+    - agree to make these settings visible to the team? (opt-in)
+- BE: triagebot reads the local DB before assigning the reviewer
+- Nice to have: change these settings directly from Zulip (see HackMD linked above)
