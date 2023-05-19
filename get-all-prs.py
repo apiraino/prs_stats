@@ -5,7 +5,7 @@ from utils import *
 # Retrieve a list of PRs
 
 # checked the number on the github repo
-TOTAL_CLOSED_PRS = 62029
+TOTAL_CLOSED_PRS = 62341
 PER_PAGE = 100
 MAX_PAGES = TOTAL_CLOSED_PRS / PER_PAGE
 # more or less observed
