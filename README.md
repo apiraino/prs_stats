@@ -43,7 +43,7 @@ Use `import-data.py` to generate the .js file to be included in the HTML pages.
 1. Download the entire PRs corpus from [rust-lang/rust](https://github.com/rust-lang/rust/pulls) (+6K pull requests, will take hours! Final dump is about 1GB uncompressed)
 
 ``` sh
-./get-all-prs.py (with sorting by date) > prs.json
+./get-all-prs.py (with sorting by date)
 ```
 
 2. How long do stay PRs open before being closed?
@@ -67,7 +67,7 @@ Use `import-data.py` to generate the .js file to be included in the HTML pages.
 - download only delta of data
 - set/get a bookmark when downloading data in case the process is interrupted
 - <del>alternate API tokens to work around throttling</del> (does not work)
-- exclude noise by excluding time elapsed from `r+` to actual issue closing
+- <del>reduce noise by excluding time elapsed from `r+` to actual issue closing</del> (maybe not, there's activity happening also after the `r+`, often enough that we don't want to ignore it)
 - why is a PR actually taking long to be closed? Give evidence if there was a lot of discussion and comments or was just sitting there unattended
 - maybe overlay candle/violin representation of max,min,avg in PRs age ([see here how](https://github.com/jackh726/rust-pr-explorer/commit/7f9567b73debeff6afa0be3899ed13b8c2c2eedf#diff-26ad4b834941d9b19ebf9db8082bd202aaf72ea0ddea85f5a8a0cb3c729cc6f2R377))
 

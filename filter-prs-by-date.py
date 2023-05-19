@@ -111,16 +111,8 @@ for pr in data:
 
     # dump week data
     output.update({curr_week: obj})
-    # eprintln(
-    #     "[W{}] {} {} {}".format(
-    #         curr_week,
-    #         counter_1,
-    #         counter_2,
-    #         counter_3,
-    #     )
-    # )
 
-# we assume to work on a single year
+# we assume to always pull data inside the same year
 year = from_date.strftime("%Y")
 for _out in [output_tcompiler, output_tlibs, output_trustdoc, output_tcompiler_tlibs]:
     dst_file = "ooops.json"
