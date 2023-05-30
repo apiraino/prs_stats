@@ -16,7 +16,6 @@ from gql.transport.exceptions import TransportQueryError
 
 API_URL = "https://api.github.com"
 API_TOKEN = os.getenv("API_TOKEN")
-API_TOKEN_2 = os.getenv("API_TOKEN_2")
 # between pages to reduce chances of being throttled
 WAIT_SECS = 0.5
 PER_PAGE = 50
@@ -53,14 +52,7 @@ def eprintln(msg):
 
 
 def get_review_comments(review_comment_url):
-    # alternate API tokens to (hopefully) work around the throttling
-    odd = False
-    if odd:
-        headers["Authorization"] = ("Bearer {}".format(API_TOKEN),)
-        odd = False
-    else:
-        headers["Authorization"] = ("Bearer {}".format(API_TOKEN_2),)
-        odd = True
+    headers["Authorization"] = ("Bearer {}".format(API_TOKEN),)
     tries = 0
     res = RETRY
     while res == RETRY:

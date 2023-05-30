@@ -33,6 +33,13 @@ time_2 = 30
 # over Z days
 time_3 = 60
 
+# Count how many PRs are in the given period of time
+total_prs = 0
+total_prs_tlibs = 0
+total_prs_tcompiler = 0
+total_prs_trustdoc = 0
+total_prs_other = 0
+
 # How long are PRs sitting before being closed?
 for pr in data:
     obj = {}
@@ -46,37 +53,35 @@ for pr in data:
     # Skip rollup PRs
     if pr["title"].startswith("Rollup"):
         continue
-    eprintln("#{}: closing date: {}".format(pr["number"], _close))
+    # eprintln("#{}: closing date: {}".format(pr["number"], _close))
     curr_week = _close.strftime("%W")
     # ex. ['T-compiler', 'S-waiting-on-bors', 'merged-by-bors']
     labels = [x["name"] for x in pr["labels"]]
     labels.sort()
 
-    # XXX: isolate S-blocked closed pull requests
-    # Should labelling be fixed?
-    # if "S-blocked" in labels:
-    #     eprintln("#{} labels: {}".format(pr["number"], labels))
-
-    # somewhat loose team classification, not 100% correct
-    # does not take into account all shades of grey
+    # loose team classification
     if "T-compiler" in labels:
         output = output_tcompiler
-    if "T-rustdoc" in labels:
+        total_prs_tcompiler = total_prs_tcompiler + 1
+    elif "T-rustdoc" in labels:
         output = output_trustdoc
-    if "T-libs" in labels or "T-libs-api" in labels:
+        total_prs_trustdoc = total_prs_trustdoc + 1
+    elif "T-libs" in labels or "T-libs-api" in labels:
         output = output_tlibs
+        total_prs_tlibs = total_prs_tlibs + 1
         if "T-compiler" in labels:
             output = output_tcompiler_tlibs
-    # eprintln("#{} label: {} so output is {}".format(pr["number"], labels, output))
+    else:
+        total_prs_other = total_prs_other + 1
 
     # calculate how many days has been this PR open
     _create = datetime.strptime(pr["created_at"], date_format)
     days_open = (_close - _create).days
-    eprintln(
-        "{} #{} closed on {} was open for {}d".format(
-            curr_week, pr["number"], _close.strftime(date_fmt), days_open
-        )
-    )
+    # eprintln(
+    #     "{} #{} closed on {} was open for {}d".format(
+    #         curr_week, pr["number"], _close.strftime(date_fmt), days_open
+    #     )
+    # )
 
     # calculate counter of days open
     if days_open <= time_1:
@@ -111,6 +116,19 @@ for pr in data:
 
     # dump week data
     output.update({curr_week: obj})
+    total_prs = total_prs + 1
+
+eprintln(
+    "Filtered out {} PRs: compiler={} libs={} rustdoc={} other={} ({} - {})".format(
+        total_prs,
+        total_prs_tcompiler,
+        total_prs_tlibs,
+        total_prs_trustdoc,
+        total_prs_other,
+        from_date,
+        to_date,
+    )
+)
 
 # we assume to always pull data inside the same year
 year = from_date.strftime("%Y")
@@ -125,6 +143,7 @@ for _out in [output_tcompiler, output_tlibs, output_trustdoc, output_tcompiler_t
     if _out == output_tcompiler_tlibs:
         dst_file = "{}_tcompiler_tlibs_prs_open_days.json".format(year)
 
+    # iterate all weeks
     json_data = []
     for w in _out:
         obj = {
@@ -136,7 +155,6 @@ for _out in [output_tcompiler, output_tlibs, output_trustdoc, output_tcompiler_t
         json_data.append(obj)
     # sort by week of year
     json_data.sort(key=lambda item: item["woy"])
-    # print(json.dumps(json_data))
 
     with open(dst_file, "w") as f:
         f.write(json.dumps(json_data))

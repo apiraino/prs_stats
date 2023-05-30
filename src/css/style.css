@@ -4,9 +4,17 @@
   flex-wrap: wrap;
   align-items: stretch;
 }
+
 .child {
   flex-grow: 1;
   min-width: 500px;
   flex-basis: 50%;
   flex-shrink: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+      background-color: #252d30;
+      /* filter: invert(1); */
+    }
 }

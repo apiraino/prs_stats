@@ -55,5 +55,3 @@ const elements = {
     fill:true
   }
 };
-
-// export { plugins, scales, elements }
