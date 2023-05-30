@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Violin Chart</title>
+        <script src=" https://cdn.jsdelivr.net/npm/chart.js@~4.3.0"></script>
+        <script src="js/chartjs-violin/package/build/index.umd.js"></script>
+        <script src=" https://cdn.jsdelivr.net/npm/d3-random@latest/dist/d3-random.min.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/test_dataset.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <div id="container" style="width: 75%">
+            <canvas id="canvas"></canvas>
+        </div>
+        <script>
+         const samples = this.Samples.utils;
+         const color = Chart.helpers.color;
+         // const b = d3.randomNormal();
+         // const random = (min, max) => () => b() * ((max || 1) - (min || 0)) + (min || 0);
+         const boxplotData = {
+             labels: testData.map(row => row.woy),
+             datasets: [
+                 {
+                     label: 'Days open for PRs 2023',
+                     backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                     borderColor: window.chartColors.red,
+                     borderWidth: 1,
+                     data: testData.map(row => row.days_open)
+                 },
+             ],
+         };
+
+         window.onload = function () {
+             const ctx = document.getElementById('canvas').getContext('2d');
+             const myBar = new Chart(ctx, {
+                 type: 'violin',
+                 data: boxplotData,
+                 options: {
+                     responsive: true,
+                     legend: {
+                         position: 'top',
+                     },
+                     title: {
+                         display: true,
+                         text: 'Chart.js Violin Chart',
+                     },
+                 },
+             });
+         };
+        </script>
+    </body>
+</html>
