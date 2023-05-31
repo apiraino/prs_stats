@@ -15,6 +15,6 @@
 @media (prefers-color-scheme: dark) {
     body {
       background-color: #252d30;
-      /* filter: invert(1); */
+       filter: invert(70%);
     }
 }
